@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using System.Globalization;
 
+namespace SimpleShop;
+
 class Shop
 {
     public List<Product> Products { get; set; } = new();

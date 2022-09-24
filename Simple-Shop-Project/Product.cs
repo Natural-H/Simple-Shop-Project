@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
 
+namespace SimpleShop;
+
 class Product
 {
     public long Id { get; set; }

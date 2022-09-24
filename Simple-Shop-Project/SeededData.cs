@@ -1,6 +1,8 @@
-﻿static class SeededData
+﻿namespace SimpleShop;
+
+static class SeedData
 {
-    public static void SeedData(Shop shop)
+    public static void Seed(Shop shop)
     {
         if (shop is null || shop.Products is null)
             throw new NullReferenceException("Shop or Shop.Products is null!");

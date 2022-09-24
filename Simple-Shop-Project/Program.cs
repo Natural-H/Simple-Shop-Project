@@ -1,7 +1,8 @@
-﻿using Figgle;
+﻿using SimpleShop;
+using Figgle;
 
 Shop Shop = new();
-SeededData.SeedData(Shop);
+SeedData.Seed(Shop);
 
 while (true)
 {
