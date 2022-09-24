@@ -4,8 +4,10 @@ static class SeedData
 {
     public static void Seed(Shop shop)
     {
-        if (shop is null || shop.Products is null)
-            throw new NullReferenceException("Shop or Shop.Products is null!");
+        if (shop is null)
+            throw new ArgumentNullException(nameof(shop));
+
+        shop.Products ??= new List<Product>();
 
         shop.Products.Add(new()
         {

@@ -53,7 +53,7 @@ class Shop
 
             if (product is null)
             {
-                Console.WriteLine("That product does not exists!");
+                Console.WriteLine("That product does not exist!");
                 return;
             }
 
@@ -134,7 +134,7 @@ class Shop
 
             if (product is null)
             {
-                Console.WriteLine("That product does not exists!\n");
+                Console.WriteLine("That product does not exist!\n");
                 return;
             }
 
@@ -142,6 +142,6 @@ class Shop
             return;
         }
 
-        Console.WriteLine("That's not a number!\n");
+        Console.WriteLine("That's not an index!\n");
     }
 }
