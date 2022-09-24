@@ -5,6 +5,8 @@ namespace SimpleShop;
 
 class Shop
 {
+    //private Product _Max_Values = new();
+
     public List<Product> Products { get; set; } = new();
     public List<Product> CarShop { get; set; } = new();
 
@@ -24,7 +26,7 @@ class Shop
     {
         Console.WriteLine(" - All products -\n");
 
-        Products.ForEach(product => product.ShowInfo(HideTotalPrice: true));
+        Products.ForEach(product => product.ShowInfo(GetMaxValues(Products), HideTotalPrice: true));
     }
 
     public void ShowShppingCar()
@@ -37,7 +39,7 @@ class Shop
 
         Console.WriteLine(" - Shopping car -\n");
 
-        CarShop.ForEach(product => product.ShowInfo(HideIndex: true));
+        CarShop.ForEach(product => product.ShowInfo(GetMaxValues(CarShop), HideIndex: true));
 
         Console.WriteLine($"\nTotal value: " +
             $"{CarShop.Sum(product => product.Amount * product.Price).ToString("C", CultureInfo.CurrentCulture)}");
@@ -144,4 +146,12 @@ class Shop
 
         Console.WriteLine("That's not an index!\n");
     }
+
+    private static Product GetMaxValues(List<Product> list) => new()
+    {
+        Id = (int)list.Max(x => x.Id),
+        Name = list.Aggregate(string.Empty, (Max, It) => Max.Length > It.Name.Length ? Max : It.Name),
+        Price = list.Max(x => x.Price),
+        Amount = list.Max(x => x.Amount)
+    };
 }

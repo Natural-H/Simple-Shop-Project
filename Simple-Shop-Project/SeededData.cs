@@ -44,5 +44,14 @@ static class SeedData
             Price = 22.5d,
             Amount = 7
         });
+
+        shop.Products.Add(new()
+        {
+            Id = 4,
+            Name = "Mug",
+            Description = "I don't know if someone will need this\nMaybe it will be Mug Root Beer or something",
+            Price = 9999.99d,
+            Amount = 1
+        });
     }
 }
