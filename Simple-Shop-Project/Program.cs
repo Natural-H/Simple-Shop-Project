@@ -2,13 +2,14 @@
 
 Shop Shop = new();
 SeededData.SeedData(Shop);
-Console.WriteLine(FiggleFonts.Standard.Render("Welcome  !"));
 
 while (true)
 {
+    Console.WriteLine(FiggleFonts.Epic.Render("Title  shop."));
     Console.WriteLine("Press A to Show Products\n" +
                       "Press B to Show your Shopping Car\n" +
-                      "Press C to Add Something to you Shopping Car\n" +
+                      "Press C to Add something to you Shopping Car\n" +
+                      "Press E to Remove something from you Shopping Car\n" +
                       "Press D to Show product Info\n");
 
     Shop.GetUserEntry().Invoke();

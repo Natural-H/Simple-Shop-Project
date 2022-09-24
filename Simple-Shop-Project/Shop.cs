@@ -8,12 +8,13 @@ class Shop
 
     readonly Mapper Mapper = new(new MapperConfiguration(cfg => cfg.CreateMap<Product, Product>()));
 
-    public Action GetUserEntry() => Console.ReadKey(intercept: true).KeyChar switch
+    public Action GetUserEntry() => Console.ReadKey(intercept: true).Key switch
     {
-        'a' => ShowProducts,
-        'b' => ShowShppingCar,
-        'c' => AddToCart,
-        'd' => ShowProductInfo,
+        ConsoleKey.A => ShowProducts,
+        ConsoleKey.B => ShowShppingCar,
+        ConsoleKey.C => AddToCart,
+        ConsoleKey.E => RemoveFromCar,
+        ConsoleKey.D => ShowProductInfo,
         _ => GetUserEntry(),
     };
 
@@ -21,10 +22,7 @@ class Shop
     {
         Console.WriteLine(" - All products -\n");
 
-        Products.ForEach(product => product.ShowInfo());
-
-        //foreach (var product in Products)
-        //    product.ShowInfo();
+        Products.ForEach(product => product.ShowInfo(HideTotalPrice: true));
     }
 
     public void ShowShppingCar()
@@ -37,10 +35,7 @@ class Shop
 
         Console.WriteLine(" - Shopping car -\n");
 
-        //foreach (var product in Products)
-        //    product.ShowInfo(ForCustomer: true);
-
-        CarShop.ForEach(product => product.ShowInfo(ForCustomer: true));
+        CarShop.ForEach(product => product.ShowInfo(HideIndex: true));
 
         Console.WriteLine($"\nTotal value: " +
             $"{CarShop.Sum(product => product.Amount * product.Price).ToString("C", CultureInfo.CurrentCulture)}");
@@ -50,9 +45,9 @@ class Shop
     {
         Console.WriteLine("What do you want to add?");
 
-        if (int.TryParse(Console.ReadLine(), out int index))
+        if (int.TryParse(Console.ReadLine(), out int Id))
         {
-            var product = Products.Find(x => x.Id.Equals(index));
+            var product = Products.Find(x => x.Id.Equals(Id));
 
             if (product is null)
             {
@@ -69,7 +64,7 @@ class Shop
                 }
 
                 product.Amount--;
-                CarShop[CarShop.FindIndex(x => x.Id.Equals(index))].Amount++;
+                CarShop[CarShop.FindIndex(x => x.Id.Equals(Id))].Amount++;
                 Console.WriteLine("Added!");
                 return;
             }
@@ -91,15 +86,49 @@ class Shop
             }
         }
 
-        Console.WriteLine("That's not an index");
+        Console.WriteLine("That's not an index!");
+    }
+
+    void RemoveFromCar()
+    {
+        if (!CarShop.Any())
+        {
+            Console.WriteLine("Car shop is empty!");
+            return;
+        }
+
+        Console.WriteLine("Which one?");
+
+        if (int.TryParse(Console.ReadLine(), out int Id))
+        {
+            var Product = CarShop.Find(x => x.Id.Equals(Id));
+
+            if (Product is null)
+            {
+                Console.WriteLine("The product was not found!");
+                return;
+            }
+
+            Product.Amount--;
+            Products[Products.FindIndex(x => x.Id.Equals(Product.Id))].Amount++;
+
+            Console.WriteLine("Removed!");
+
+            if (Product.Amount <= (0))
+                CarShop.Remove(Product);
+
+            return;
+        }
+
+        Console.WriteLine("That's not an index!");
     }
     
     void ShowProductInfo()
     {
         Console.WriteLine("Which one?");
-        if (int.TryParse(Console.ReadLine(), out int index))
+        if (int.TryParse(Console.ReadLine(), out int Id))
         {
-            var product = Products.Find(x => x.Id.Equals(index));
+            var product = Products.Find(x => x.Id.Equals(Id));
 
             if (product is null)
             {
